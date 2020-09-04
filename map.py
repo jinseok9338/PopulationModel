@@ -38,6 +38,11 @@ class Map:
                     self.map[random_num_x][random_num_y] = "G"
                     break
 
+    def word_a_day_passes(self):
+        self.day += 1
+        if self.day%5 ==0:
+            self.generate_grass(self.number_of_grass)
+
 
 
 

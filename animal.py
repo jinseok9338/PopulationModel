@@ -1,18 +1,22 @@
-from random import choice
+from random import choice, randint,getrandbits
 from map import Map
+
 
 map = Map()
 
 class Animal:
-
+    class_counter = 0
     def __init__(self):
         self.hunger = 0
         self.thirst = 0
         self.day = 0
         self.age = int(0/365)
-        self.sex = bool(random.getrandbits(1))
+        self.sex = bool(getrandbits(1))
         self.sexual_drive = 0
-        self.map = Map()
+        self.map_object = Map()
+        self.map = self.map_object.map
+        self.id = Animal.class_counter
+        Animal.class_counter += 1
 
     def randomly_move(self,animal_pos,animal):
         movable_tile_list =[]
@@ -24,7 +28,7 @@ class Animal:
         except IndexError:
             pass
         if not movable_tile_list:
-            movable_tile_pos = anima_pos
+            movable_tile_pos = animal_pos
         else:
             movable_tile_pos = choice(movable_tile_list)
 
@@ -35,7 +39,7 @@ class Animal:
         self.day += 1
         self.thirst += 10
         self.hunger += 5
-        if self.age >= 1 and self.sexual_drive < 100:
+        if self.age >= 0.5 and self.sexual_drive < 100:
             self.sexual_drive += 1
         if self.thirst >= 100:
             self.map[animal_pos[0]][animal_pos[1]] = "E"
@@ -47,12 +51,19 @@ class Animal:
             self.map[animal_pos[0]][animal_pos[1]] = "E"
             del self
 
+
+
     def find_water(self):
-        pass
+        water_pos_list = []
+        for a in range(-2,3):
+            for b in range(-2,3):
+                if self.map[a][b] == "W":
+                    water_pos_list.append((a,b))
+        water_pos = choice(water_pos_list)
+        return water_pos
 
-    def find_opposite_sex(self):
+    def give_birth(self):
         pass
-
 
 
 class Bunny(Animal):
@@ -61,6 +72,16 @@ class Bunny(Animal):
         Animal.__init__(self)
         self.bunny = "B"
         self.bunny_pos = (0, 0)
+
+        self.bunny_objcect = {
+            "Symbol" : "B",
+            "Position" : self.bunny_pos,
+            "Sex" : self.sex,
+            "ID" : self.id,
+            "Day": self.day,
+            "Age": self.age,
+            "Sexual_Drive": self.sexual_drive,
+        }
         self.create_bunny()
 
 
@@ -70,6 +91,7 @@ class Bunny(Animal):
         if self.map[random_num_x][random_num_x] == "E":
             self.map[random_num_x][random_num_x] = self.bunny
             self.bunny_pos = (random_num_x,random_num_y)
+            self.bunny_objcect["Position"] = self.bunny_pos
         else:
             self.create_bunny()
 
@@ -87,10 +109,13 @@ class Bunny(Animal):
 
 
     def find_grass(self):
-        pass
-
-
-
+        grass_pos_list = []
+        for a in range(-2,3):
+            for b in range(-2,3):
+                if self.map[a][b] == "G":
+                    grass_pos_list.append((a,b))
+        grass_pos = choice(grass_pos_list)
+        return grass_pos
 
 
 
@@ -99,8 +124,17 @@ class Wolf(Animal):
 
     def __init__(self):
         Animal.__init__(self)
-        self.wolf = "W"
+        self.wolf = "F"
         self.wolf_pos = (0, 0)
+        self.wolf_objcect = {
+            "Symbol" : "F",
+            "Position" : self.wolf_pos,
+            "Sex" : self.sex,
+            "ID" : self.id,
+            "Day": self.day,
+            "Age": self.age,
+            "Sexual_Drive": self.sexual_drive,
+        }
         self.create_wolf()
 
     def create_wolf(self):
@@ -109,11 +143,19 @@ class Wolf(Animal):
         if self.map[random_num_x][random_num_x] == "E":
             self.map[random_num_x][random_num_x] = self.wolf
             self.wolf_pos = (random_num_x,random_num_y)
+            self.wolf_objcect["Position"] = self.wolf_pos
         else:
             self.create_wolf()
 
     def find_bunny(self):
-        pass
+        bunny_pos_list = []
+        for a in range(-2,3):
+            for b in range(-2,3):
+                if self.map[a][b] == "B":
+                    bunny_pos_list.append((a,b))
+        bunny_pos = choice(bunny_pos_list)
+        return bunny_pos
+
 
     def wolf_move(self):
 
@@ -126,11 +168,11 @@ class Wolf(Animal):
         else:
             self.randomly_move(self.wolf_pos, self.wolf)
 
-
-
-
-
-
-
-
-
+    def find_opposite_sex_wolf(self):
+        opposite_sex_pos_list = []
+        for a in range(-2,3):
+            for b in range(-2,3):
+                if self.map[a][b] == "F": and
+                    opposite_sex_pos_list.append((a,b))
+        grass_pos = choice(opposite_sex_pos_list)
+        return grass_pos
