@@ -1,13 +1,16 @@
 from random import randint
 class Map:
+
     number_of_grass = 25
-    number_of_water = 3
+    number_of_water = 5
+
     def __init__(self):
         self.day = 0
         self.year = self.day/365 #There is no leap year
         self.map = [["E" for _ in range(10)] for _ in range(10)]
         self.generate_water(self.number_of_water)
         self.generate_grass(self.number_of_grass)
+
 
     def generate_water(self,num_of_water):
         for _ in range(num_of_water):
@@ -25,6 +28,7 @@ class Map:
                 self.generate_water(num_of_water)
 
 
+
     def generate_grass(self,how_many_grass):
         for a in range(how_many_grass):
             while True:
@@ -33,6 +37,8 @@ class Map:
                 if self.map[random_num_x][random_num_y] == "E":
                     self.map[random_num_x][random_num_y] = "G"
                     break
+
+
 
 
 
