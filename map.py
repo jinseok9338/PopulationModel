@@ -12,6 +12,7 @@ class Map:
         self.generate_grass(self.number_of_grass)
 
 
+
     def generate_water(self,num_of_water):
         for _ in range(num_of_water):
             random_start_point = randint(0, 9)
