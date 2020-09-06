@@ -1,4 +1,6 @@
 from random import randint
+
+
 class Map:
 
     number_of_grass = 25
@@ -10,8 +12,6 @@ class Map:
         self.map = [["E" for _ in range(10)] for _ in range(10)]
         self.generate_water(self.number_of_water)
         self.generate_grass(self.number_of_grass)
-
-
 
     def generate_water(self,num_of_water):
         for _ in range(num_of_water):
@@ -27,8 +27,6 @@ class Map:
                             self.generate_water(num_of_water)
             except IndexError:
                 self.generate_water(num_of_water)
-
-
 
     def generate_grass(self,how_many_grass):
         for a in range(how_many_grass):
